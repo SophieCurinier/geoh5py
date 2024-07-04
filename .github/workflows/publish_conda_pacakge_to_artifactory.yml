@@ -5,13 +5,14 @@ on:
         branches:
             - 'DEVOPS-425'
 env:
-    PACKAGE_NAME: 'my-repo'
+    PACKAGE_NAME: ${{ GITHUB_REPOSITORY }}
     VERSION: '0.1.0'
-    BRANCH_NAME: ''
+    BRANCH_NAME: ${{ GITHUB_HEAD_REF }}
     BUILD_NUMBER: '12'
+    ARCHIVE_NAME: ${{ format('{0}-{1}-{2}-{3}', PACKAGE_NAME, VERSION, BRANCH_NAME, BUILD_NUMBER) }}
 
 jobs:
-    build:
+    create-conda-recipe:
         runs-on: ubuntu-latest
         steps:
         -   name: Checkout code
@@ -21,15 +22,20 @@ jobs:
                 python -m pip install grayskull
         -   name: Archive my repository
             run: |
-                git archive --format=tar.gz HEAD > "$PACKAGE_NAME-$VERSION-$BRANCH_NAME-$BUILD_NUMBER.tar.gz"
+                git archive --format=tar.gz HEAD > "$ARCHIVE_NAME.tar.gz"
         -   name: Create conda recipe
             run: |
-                grayskull pypi --strict-conda-forge "$PACKAGE_NAME-$VERSION-$BRANCH_NAME-$BUILD_NUMBER.tar.gz"
+                grayskull pypi --strict-conda-forge "$ARCHIVE_NAME.tar.gz"
+
+    build-conda-package:
+        runs-on: ubuntu-latest
+        needs: create-conda-recipe
+        steps:
         -   name: Build conda package
             run: |
                 output=$(conda build $PACKAGE_NAME --output)
         -   name: Publish conda package
             run: |
-                curl -u $ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD -T $output "https://mirageoscienceltd.jfrog.io/artifactory/dev/$PACKAGE_NAME/$VERSION/$PACKAGE_NAME-$VERSION-$BUILD_NUMBER.tar.bz2"
+                curl -u $ARTIFACTORY_USER:$ARTIFACTORY_PASSWORD -T $output "https://mirageoscienceltd.jfrog.io/artifactory/dev/$PACKAGE_NAME/$VERSION/$ARCHIVE_NAME.tar.bz2"
 
          
