@@ -5,9 +5,9 @@ on:
         branches:
             - 'DEVOPS-425'
 env:
-    PACKAGE_NAME: ${{ env.GITHUB_REPOSITORY }}
+    PACKAGE_NAME: ${{ github.repository }}
     VERSION: '0.1.0'
-    BRANCH_NAME: ${{ env.GITHUB_HEAD_REF }}
+    BRANCH_NAME: ${{ github.ref }}
     BUILD_NUMBER: '12'
     ARCHIVE_NAME: ${{ format('{0}-{1}-{2}-{3}', PACKAGE_NAME, VERSION, BRANCH_NAME, BUILD_NUMBER) }}
 
