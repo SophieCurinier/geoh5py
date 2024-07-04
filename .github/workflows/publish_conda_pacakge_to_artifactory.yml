@@ -9,7 +9,7 @@ env:
     VERSION: '0.1.0'
     BRANCH_NAME: ${{ github.ref }}
     BUILD_NUMBER: '12'
-    ARCHIVE_NAME: "$PACKAGE_NAME-${{env.VERSION}}-$env.BRANCH_NAME-$env.BUILD_NUMBER"
+    ARCHIVE_NAME: "$PACKAGE_NAME-$VERSION-$BRANCH_NAME-$BUILD_NUMBER"
 
 jobs:
     create-conda-recipe:
