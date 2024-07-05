@@ -20,4 +20,4 @@ on:
 
 jobs:
   call-workflow-jira-issue:
-    uses: MiraGeoscience/DevTool/.github/workflows/static-analysis.yml@DEVOPS-427
+    uses: MiraGeoscience/DevTools/.github/workflows/static-analysis.yml@DEVOPS-427
