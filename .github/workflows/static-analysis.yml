@@ -16,8 +16,8 @@ on:
       - release/**
       - feature/**
       - hotfix/**
-      - devops-427 # Temporary branch for testing
+      - DEVOPS-427 # Temporary branch for testing
 
 jobs:
   call-workflow-jira-issue:
-    uses: MiraGeoscience/DevTool/.github/workflows/static-analysis.yml@devops-427
+    uses: MiraGeoscience/DevTool/.github/workflows/static-analysis.yml@DEVOPS-427
