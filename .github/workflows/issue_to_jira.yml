@@ -2,6 +2,10 @@ name: Create JIRA issue
 on:
   issues:
     types: [opened]
+  push:
+    branches:
+      - devops-427 # Temporary branch for testing
+
 jobs:
   call-workflow-jira-issue:
     uses: MiraGeoscience/DevTool/.github/workflows/issue_to_jira.yml@devops-427
