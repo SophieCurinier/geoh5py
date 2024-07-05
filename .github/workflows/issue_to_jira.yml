@@ -4,4 +4,4 @@ on:
     types: [opened]
 jobs:
   call-workflow-jira-issue:
-    uses: MiraGeoscience/DevTool/.github/workflows/issue_to_jira.yml@devops-425
+    uses: MiraGeoscience/DevTool/.github/workflows/issue_to_jira.yml@devops-427
